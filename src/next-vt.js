@@ -2,6 +2,8 @@ import {
     useViewTransition
 } from "./react-vt";
 
+export {useViewTransition, SuspendViewTransition} from "./react-vt";
+
 import {
     useEffect
 } from "react";
@@ -37,5 +39,5 @@ export function useNextRouterViewTransitions({
             events.off("routerChangeStart", beginNavigation);
             events.off("routeChangeComplete", endNavigation);
         };
-    }, [startViewTransition, events]);
+    }, []);
 }

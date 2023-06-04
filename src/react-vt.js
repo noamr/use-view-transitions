@@ -4,6 +4,7 @@ import {
     useReducer,
     useSyncExternalStore,
     startTransition,
+    useEffect,
 } from "react";
 
 let suspendersCount = 0;
@@ -40,10 +41,10 @@ function useBlockRendering(blocked) {
             // Do nothing. Busy wait to make sure react rerenders.
         }
     }
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (blocked)
             forceRender();
-    }, [blocked]);
+    });
 }
 
 /**
@@ -63,14 +64,14 @@ function useBlockRendering(blocked) {
 export function SuspendViewTransition() {
     useLayoutEffect(() => {
         suspendViewTransitionCapture();
-        return resumeViewTransitionCapture;
+        return () => resumeViewTransitionCapture();
     }, []);
     return null;
 }
 
 /**
  * @callback TransitionDOMUpdateCallback
-* @returns {PromiseLike<void>} a promise that's resolved
+ * @returns {PromiseLike<void>} a promise that's resolved
  *
  * @callback StartVT
  * @param {TransitionDOMUpdateCallback?} domUpdateCallback - A callback that would update the new state.
@@ -114,10 +115,12 @@ export function useViewTransition() {
 
     function startViewTransition(updateCallback) {
         // Fallback to simply running the callback soon.
-        if (!document.startViewTransition && updateCallback) {
-            startTransition(updateCallback);
+        if (!document.startViewTransition) {
+            if (updateCallback)
+                startTransition(updateCallback);
             return;
         }
+
 
         suspendViewTransitionCapture();
         setTransitionState("capturing-old");
@@ -129,11 +132,14 @@ export function useViewTransition() {
             didCaptureNewState = resolve;
         }));
 
-        transition.ready.then(() => setTransitionState("animating")).catch(() => {
-            setTransitionState("skipped");
-        });
         transition.finished.then(() => {
             setTransitionState("idle");
+        });
+
+        transition.ready.then(() => {
+            setTransitionState("animating");
+        }).catch(() => {
+            setTransitionState("skipped");
         });
     }
 

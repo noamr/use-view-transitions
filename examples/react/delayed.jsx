@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useViewTransition, SuspendViewTransition } from "use-view-transition/react"
+import { useViewTransition, SuspendViewTransition } from "../../src/react-vt"
 
 async function delay(color) {
     await new Promise((resolve) => setTimeout(resolve, 500));
