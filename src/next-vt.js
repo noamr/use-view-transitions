@@ -2,13 +2,19 @@ import {
     useViewTransition
 } from "./react-vt";
 
+import {
+    useEffect
+} from "react";
+
 /**
  * Performs CSS view transitions automatically when a NextJS navigation takes place.
  *
  * Use this hook in your _app.js.
  *
  */
-export function useNextRouterViewTransitions({events}) {
+export function useNextRouterViewTransitions({
+    events
+}) {
     const {
         startViewTransition,
         suspend,
