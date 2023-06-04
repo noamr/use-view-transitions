@@ -1,6 +1,6 @@
 {
   "name": "use-view-transitions",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A React hook for CSS view transitions",
   "scripts": {
     "dev": "vite examples",
@@ -19,11 +19,11 @@
   "exports": {
     "./react": {
       "require": "./dist/cjs/react-vt.js",
-      "import": "./dist/cjs/react-vt.js"
+      "import": "./src/react-vt.js"
     },
     "./next": {
       "require": "./dist/cjs/next-vt.js",
-      "import": "./dist/cjs/next-vt.js"
+      "import": "./src/next-vt.js"
     }
   },
   "dependencies": {
