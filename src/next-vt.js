@@ -17,18 +17,18 @@ export function useNextRouterViewTransitions({
 }) {
     const {
         startViewTransition,
-        suspend,
-        resume
+        suspendViewTransitionCapture,
+        resumeViewTransitionCapture
     } = useViewTransition();
 
     useEffect(() => {
         function beginNavigation() {
             startViewTransition();
-            suspend();
+            suspendViewTransitionCapture();
         };
 
         function endNavigation() {
-            resume();
+            resumeViewTransitionCapture();
         }
 
         events.on("routeChangeStart", beginNavigation);
