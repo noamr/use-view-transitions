@@ -1,6 +1,6 @@
 import {
     useRouter
-} from "next";
+} from "next/router";
 
 import {
     useViewTransition

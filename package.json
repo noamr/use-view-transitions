@@ -1,6 +1,6 @@
 {
   "name": "use-view-transitions",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React hook for CSS view transitions",
   "scripts": {
     "dev": "vite examples",
@@ -18,11 +18,11 @@
   "exports": {
     "./react": {
       "require": "./dist/cjs/react-vt.js",
-      "import": "./src/react-vt.js"
+      "import": "./dist/cjs/react-vt.js"
     },
     "./next": {
       "require": "./dist/cjs/next-vt.js",
-      "import": "./src/next-vt.js"
+      "import": "./dist/cjs/next-vt.js"
     }
   },
   "dependencies": {
@@ -34,5 +34,8 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "vite": "^4.3.9"
+  },
+  "files": {
+    "include": ["dist/cjs/next-vt.js", "dist/cjs/react-vt.js"]
   }
 }
