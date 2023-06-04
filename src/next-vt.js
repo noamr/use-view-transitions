@@ -1,8 +1,4 @@
 import {
-    useRouter
-} from "next/router";
-
-import {
     useViewTransition
 } from "./react-vt";
 
@@ -12,11 +8,7 @@ import {
  * Use this hook in your _app.js.
  *
  */
-export function useNextRouterViewTransitions() {
-    const {
-        events
-    } = useRouter();
-
+export function useNextRouterViewTransitions({events}) {
     const {
         startViewTransition,
         suspend,
