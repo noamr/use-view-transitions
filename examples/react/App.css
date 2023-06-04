@@ -1,0 +1,35 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#square {
+  view-transition-name: square;
+  width: 100px;
+  height: 100px;
+  background: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#slow {
+  width: 100px;
+  height: 100px;
+  view-transition-name: slow;
+  background: lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: blue;
+}
+
+#square.on {
+  background: green;
+}

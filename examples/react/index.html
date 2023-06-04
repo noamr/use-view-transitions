@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Transitions + React</title>
+    <style>
+#abc {
+  width: 100px;
+  height: 100px;
+  background: green;
+  view-transition-name: anim;
+}
+
+#abc.red {
+  background: red;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./react-simple.jsx"></script>
+  </body>
+</html>
