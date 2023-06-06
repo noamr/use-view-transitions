@@ -102,3 +102,8 @@ return (
 
 The hook listens to NextJS's [router events](https://nextjs.org/docs/pages/api-reference/functions/use-router#routerevents)
 and uses the React hook internally to make sure that the old state is captured before the navigation is executed.
+
+## Examples
+
+- [A very simply NextJS example](https://codesandbox.io/p/github/noamr/nextjs-view-transitions-simple-example/)
+- [NextJS Movies App with view transitions](https://github.com/noamr/next-movies/tree/vt) (see [live demo](https://next-movies-with-view-transitions.vercel.app/))
