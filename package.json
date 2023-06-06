@@ -1,9 +1,8 @@
 {
   "name": "use-view-transitions",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A React hook for CSS view transitions",
   "scripts": {
-    "dev": "vite examples",
     "build-examples": "vite build examples",
     "build": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --sourcemap=external ./src/*",
     "build:watch": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --sourcemap=inline --watch ./src/*",

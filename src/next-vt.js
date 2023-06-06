@@ -2,8 +2,6 @@ import {
     useViewTransition
 } from "./react-vt";
 
-export {useViewTransition, SuspendViewTransition} from "./react-vt";
-
 import {
     useEffect
 } from "react";

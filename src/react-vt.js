@@ -1,5 +1,4 @@
 import {
-    useLayoutEffect,
     useState,
     useReducer,
     useSyncExternalStore,
@@ -7,6 +6,7 @@ import {
     useEffect,
 } from "react";
 
+console.log(useState)
 let suspendersCount = 0;
 const observers = new Set();
 let didCaptureNewState = null;
@@ -62,7 +62,7 @@ function useBlockRendering(blocked) {
  * @returns {React.ReactElement}
  */
 export function SuspendViewTransition() {
-    useLayoutEffect(() => {
+    useEffect(() => {
         suspendViewTransitionCapture();
         return () => resumeViewTransitionCapture();
     }, []);
@@ -104,7 +104,7 @@ export function useViewTransition() {
         return () => observers.delete(observer);
     }, () => suspendersCount, () => 0);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (didCaptureNewState && !suspendersCount) {
             didCaptureNewState();
             didCaptureNewState = null;
