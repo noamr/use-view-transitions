@@ -1,5 +1,11 @@
 # Using CSS same-document view-transitions with React
 
+## Installation
+
+```sh
+npm install use-view-transitions
+```
+
 ## Overview
 [CSS view transitions](https://drafts.csswg.org/css-view-transitions-1/) are a new feature that allows for expressive
 animations between states.
