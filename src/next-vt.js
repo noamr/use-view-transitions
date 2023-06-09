@@ -3,8 +3,11 @@ import {
 } from "./react-vt";
 
 import {
-    useEffect
+    useEffect,
+    Suspense
 } from "react";
+
+export { SuspendViewTransition, useViewTransition } from "./react-vt";
 
 /**
  * Performs CSS view transitions automatically when a NextJS navigation takes place.
@@ -38,4 +41,26 @@ export function useNextRouterViewTransitions({
             events.off("routeChangeComplete", endNavigation);
         };
     }, []);
+}
+
+function RouterEventsNotifier() {
+  usePathname();
+  useSearchParams();
+  return null;
+}
+
+/**
+ * A React component that that makes sure view-transitions
+ * behave nicely with NextJS app router.
+ *
+ * Specifically, it suspends capturing the new state until the
+ * navigation is complete.
+ *
+ * @type {React.FC<{}>}
+ * @returns {React.ReactElement}
+ */
+export function EnableNextAppRouterViewTransitions({}) {
+  return <Suspense fallback={<SuspendViewTransition/>}>
+    <RouterEventsNotifier />
+  </Suspense>
 }

@@ -4,6 +4,7 @@ import {
     useSyncExternalStore,
     startTransition,
     useEffect,
+    useTransition,
 } from "react";
 
 console.log(useState)
@@ -19,6 +20,8 @@ function resumeViewTransitionCapture() {
     !--suspendersCount;
     observers.forEach(observer => observer());
 }
+
+const areViewTransitionsSupported = typeof globalThis.document?.startViewTransition === "function";
 
 /**
  * An internal hook (for now) that blocks non-critical rendering until
@@ -46,6 +49,44 @@ function useBlockRendering(blocked) {
             forceRender();
     });
 }
+
+/**
+ * A React component to automatically start a view-transition when
+ * elements matching a particular CSS selector are clicked.
+ *
+ * This is useful for enabling view-transitions, for example, in existing
+ * code that uses NextJS's <Link>.
+ *
+ * When used, this would capture click events, and if they match the selector,
+ * would start a transition and re-dispatch the click event once the old state
+ * is captured.
+ *
+ * @type {React.FC<{match: string}>}
+ * @returns {React.ReactElement}
+ */
+export function AutoViewTransitionsOnClick({match} = {match: "a[href]"}) {
+    const [, startTransition] = useTransition();
+    const {startViewTransition} = useViewTransition();
+    useEffect(() => {
+      if (!match || !globalThis.document)
+        return;
+
+      function captureClick(event) {
+        if (!event.target.matches(match) || !event.isTrusted)
+          return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        startViewTransition(() => startTransition(() => event.target.click()));
+      }
+
+      globalThis.document.addEventListener("click", captureClick, {capture: true});
+      return () => {
+        globalThis.document.removeEventListener("click", captureClick)
+      }
+    }, []);
+    return null;
+  }
 
 /**
  * A React component that suspends beginning a
@@ -115,7 +156,7 @@ export function useViewTransition() {
 
     function startViewTransition(updateCallback) {
         // Fallback to simply running the callback soon.
-        if (!document.startViewTransition) {
+        if (!areViewTransitionsSupported) {
             if (updateCallback)
                 startTransition(updateCallback);
             return;
@@ -129,6 +170,7 @@ export function useViewTransition() {
             resumeViewTransitionCapture();
             if (updateCallback)
                 await updateCallback();
+            resolve();
             didCaptureNewState = resolve;
         }));
 
@@ -138,7 +180,8 @@ export function useViewTransition() {
 
         transition.ready.then(() => {
             setTransitionState("animating");
-        }).catch(() => {
+        }).catch(e => {
+            console.error(e)
             setTransitionState("skipped");
         });
     }
@@ -149,4 +192,14 @@ export function useViewTransition() {
         suspendViewTransitionCapture,
         resumeViewTransitionCapture
     };
+}
+
+export function useAutoViewTransitions({enabled} = {enabled: true}) {
+    const {transitionState, startViewTransition} = useViewTransition();
+    const [isPending] = useTransition();
+    useEffect(() => {
+        if (enabled && transitionState === "idle" && isPending && areViewTransitionsSupported) {
+            startViewTransition();
+        }
+    }, [transitionState, isPending, enabled]);
 }
