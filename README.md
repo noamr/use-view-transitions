@@ -107,6 +107,8 @@ Since NextJS is based on React, using the above technique would work in most cas
 However, some state changes and event handlers happen within NextJS itself, e.g. navigating
 to routes based on link clicks.
 
+### Before AppRouter (pages directory)
+
 For that, we offer the `useNextRouterViewTransitions()` hook:
 
 ```jsx
@@ -125,6 +127,40 @@ return (
 
 The hook listens to NextJS's [router events](https://nextjs.org/docs/pages/api-reference/functions/use-router#routerevents)
 and uses the React hook internally to make sure that the old state is captured before the navigation is executed.
+
+### With AppRouter
+
+With AppRouter, we don't have router events, so there's no good signal of when a navigation starts.
+We can still use `usePathname` and `useSearchParams` to understand when a navigation is completed, but we have to do something
+to make sure the old state is capture before we start the navigation.
+
+For that, we could either implement our own `<Link>` element, wrap the existing one, or capture clicks - which is what
+`AutoViewTransitionsOnClick` does. (Any of these ways is legit and has trade-offs).
+
+Example:
+```jsx
+"use client";
+import {AutoViewTransitionsOnClick, EnableNextAppRouterViewTransitions} from "use-view-transitions/next";
+
+export default function RootLayout({
+  children,
+}) {
+
+  return (
+    <html lang="en">
+      // This would make sure transition's new state is captured at the end of the route change.
+      <EnableRouterViewTransitions />
+
+      // This captures link clicks and injects a view transition.
+      <AutoViewTransitionsOnClick match="a[href]" />
+      <body>
+        {children}
+      </body>
+    </html>
+  )
+}
+```
+
 
 ## Examples
 
