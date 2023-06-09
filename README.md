@@ -45,39 +45,57 @@ By default, it works like [React.startTransition](https://react.dev/reference/re
 but would execute the CSS view-transition without a `flushSync`:
 
 ```jsx
-import {useViewTransition} from "use-view-transitions/react";
+import { useViewTransition } from 'use-view-transitions/react'
 
-const {startViewTransition} = useViewTransition();
-const [value, increment] = useReducer(x => x + 1, 0);
-return <>
-  <button onClick={() => startViewTransition(() => increment())}>Increment</button>
-  {value}
-</button>
+const { startViewTransition } = useViewTransition()
+const [value, increment] = useReducer((x) => x + 1, 0)
+return (
+	<>
+		<button onClick={() => startViewTransition(() => increment())}>
+			Increment
+		</button>
+		{value}
+	</>
+)
 ```
 
 Using `useViewTrantision` together with the `<SuspendViewTransitions />` component, you can suspend
 capturing the new state until ready.
 
 ```jsx
-import {useViewTransition, SuspendViewTransition} from "use-view-transitions/react";
-const {startViewTransition} = useViewTransition();
-const [isLoading, setLoading] = useState(false);
+import {
+	useViewTransition,
+	SuspendViewTransition,
+} from 'use-view-transitions/react'
+const { startViewTransition } = useViewTransition()
+const [isLoading, setLoading] = useState(false)
 
 // Don't use this code for real, it's simulation for something that loads asynchronously.
 useEffect(() => {
-    if (isLoading)
-        setTimeout(() => {
-            setLoading(false);
-        }, 100);
-}, [isLoading]);
+	if (isLoading) {
+		setTimeout(() => {
+			setLoading(false)
+		}, 100)
+	}
+}, [isLoading])
 
-return <>
-  <button onClick={() => startViewTransition(() => {setLoading(true); })}>Load</button>
-  {
-    // This would suspend capturing the "new" state of the transition until loaded.
-    isLoading ? <SuspendViewTransition /> : null
-  }
-</button>
+return (
+	<>
+		<button
+			onClick={() =>
+				startViewTransition(() => {
+					setLoading(true)
+				})
+			}
+		>
+			Load
+		</button>
+		{
+			// This would suspend capturing the "new" state of the transition until loaded.
+			isLoading ? <SuspendViewTransition /> : null
+		}
+	</>
+)
 ```
 
 Note that like in the `flushSync` case, unrelated changes wrapped in `React.startTransition` would only
@@ -94,17 +112,15 @@ For that, we offer the `useNextRouterViewTransitions()` hook:
 ```jsx
 // _app.js
 
-import {useNextRouterViewTransitions} from "use-view-transitions/next";
+import { useNextRouterViewTransitions } from 'use-view-transitions/next'
 
-useNextRouterViewTransitions();
+useNextRouterViewTransitions()
 
 return (
-<>
-    <Layout>
-        <Component {...pageProps} />
-    </Layout>
-</>
-
+	<Layout>
+		<Component {...pageProps} />
+	</Layout>
+)
 ```
 
 The hook listens to NextJS's [router events](https://nextjs.org/docs/pages/api-reference/functions/use-router#routerevents)
