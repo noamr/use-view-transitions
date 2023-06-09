@@ -7,10 +7,12 @@ npm install use-view-transitions
 ```
 
 ## Overview
+
 [CSS view transitions](https://drafts.csswg.org/css-view-transitions-1/) are a new feature that allows for expressive
 animations between states.
 
 The main syntax for view-transitions looks something like this:
+
 ```js
 document.startViewTransition(() => updateDOMAndReturnPromise())
 ```
@@ -25,10 +27,10 @@ This is the most basic way, and it doesn't require too much magic.
 
 ```js
 document.startViewTransition(() =>
-    ReactDOM.flushSync(() => {
-        // set the "after" state here, synchronously.
-    })
-);
+	ReactDOM.flushSync(() => {
+		// set the "after" state here, synchronously.
+	}),
+)
 ```
 
 This approach should work for the common cases, but some apps don't work well
@@ -55,7 +57,6 @@ return <>
 
 Using `useViewTrantision` together with the `<SuspendViewTransitions />` component, you can suspend
 capturing the new state until ready.
-
 
 ```jsx
 import {useViewTransition, SuspendViewTransition} from "use-view-transitions/react";
