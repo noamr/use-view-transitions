@@ -26,7 +26,7 @@
       "import": "./src/next-vt.js"
     }
   },
-  "dependencies": {
+  "devDependencies": {
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
