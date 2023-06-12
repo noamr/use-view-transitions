@@ -7,7 +7,6 @@ import {
     useTransition,
 } from "react";
 
-console.log(useState)
 let suspendersCount = 0;
 const observers = new Set();
 let didCaptureNewState = null;
