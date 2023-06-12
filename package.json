@@ -1,6 +1,6 @@
 {
   "name": "use-view-transitions",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "A React hook for CSS view transitions",
   "scripts": {
     "build-examples": "vite build examples",
