@@ -38,6 +38,8 @@
   },
   "files": [
     "dist/cjs/next-vt.js",
-    "dist/cjs/react-vt.js"
+    "dist/cjs/react-vt.js",
+    "src/next-vt.js",
+    "src/react-vt.js"
   ]
 }
