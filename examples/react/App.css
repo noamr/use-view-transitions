@@ -32,4 +32,5 @@ body {
 
 #square.on {
   background: green;
+  margin-left: auto;
 }
