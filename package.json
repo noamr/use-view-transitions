@@ -8,7 +8,7 @@
     "build": "npm run build:packages && jsdoc -R README.md src/",
     "build:watch": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.js=jsx --sourcemap=inline --watch ./src/*",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview examples"
+    "preview": "vite build --watch examples & vite preview examples"
   },
   "author": "Noam Rosenthal <nrosenthal@chromium.org>",
   "repository": "noamr/use-view-transitions",
