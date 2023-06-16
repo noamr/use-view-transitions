@@ -1,15 +1,14 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import {resolve} from 'path'
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/use-view-transitions/',
   build: {
     rollupOptions: {
-      input: {
-        "react": resolve(__dirname, "react/index.html"),
-      }
+      input: resolve(__dirname, "index.html"),
     }
   }
 })
