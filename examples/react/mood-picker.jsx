@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { flushSync } from 'react-dom'
 import { useViewTransition } from '../../src/react-vt'
 
 const moods = [
@@ -18,15 +17,9 @@ export function MooodPicker() {
 			{moods.map(({ emoji }, index) => (
 				<button
 					onClick={() => {
-						// startViewTransition doesn't work 🤷‍♀️
-						// startViewTransition(() => {
-						// 	setCurrentMoodIndex(index)
-						// })
-						document.startViewTransition(() =>
-							flushSync(() => {
-								setCurrentMoodIndex(index)
-							}),
-						)
+						startViewTransition(() => {
+							setCurrentMoodIndex(index)
+						})
 					}}
 					disabled={index === currentMoodIndex}
 				>
