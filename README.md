@@ -166,3 +166,4 @@ export default function RootLayout({
 
 - [A very simply NextJS example](https://codesandbox.io/p/github/noamr/nextjs-view-transitions-simple-example/)
 - [NextJS Movies App with view transitions](https://github.com/noamr/next-movies/tree/vt) (see [live demo](https://next-movies-with-view-transitions.vercel.app/))
+- [Another simple example](https://noamr.github.io/use-view-transitions/)

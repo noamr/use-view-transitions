@@ -1,9 +1,10 @@
 body {
   display: flex;
   justify-content: center;
-}
-.App {
   font-family: sans-serif;
+}
+
+.App {
   text-align: center;
 }
 
@@ -32,4 +33,5 @@ body {
 
 #square.on {
   background: green;
+  margin-left: auto;
 }
