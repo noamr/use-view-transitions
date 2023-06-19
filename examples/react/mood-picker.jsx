@@ -42,7 +42,7 @@ export function MooodPicker() {
         >
           {moods[currentMoodIndex].emoji}
         </span>
-        <div style={{ fontSize: '2em' }}>{moods[currentMoodIndex].label}</div>
+        <div>{moods[currentMoodIndex].label}</div>
       </div>
     </div>
   )
