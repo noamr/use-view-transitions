@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import { useViewTransition, SuspendViewTransition } from "../../src/react-vt"
 
 async function delay(color) {
@@ -8,6 +8,7 @@ async function delay(color) {
 
 export function SquareWithDelayedTransition() {
     const [state, setState] = useState("idle");
+    const [count, inc] = useReducer(x => x + 1, 0);
     const [color, setColor] = useState("blue");
     const { startViewTransition } = useViewTransition();
 
@@ -17,6 +18,7 @@ export function SquareWithDelayedTransition() {
           id="slow"
           style={{ background: color, color: 'white' }}
           onClick={() => {
+            inc();
             startViewTransition(async () => {
               setState("computing");
               setColor(await delay(color === "blue" ? "green" : "blue"));
@@ -30,7 +32,7 @@ export function SquareWithDelayedTransition() {
               <SuspendViewTransition />
             </>
           ) : (
-            "Click"
+            `Click ${count}`
           )}
         </div>
       </>
