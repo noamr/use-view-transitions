@@ -161,7 +161,6 @@ export function useViewTransition() {
             return;
         }
 
-
         suspendViewTransitionCapture();
         setTransitionState("capturing-old");
         const transition = document.startViewTransition(() => new Promise(async resolve => {
@@ -169,7 +168,6 @@ export function useViewTransition() {
             resumeViewTransitionCapture();
             if (updateCallback)
                 await updateCallback();
-            resolve();
             didCaptureNewState = resolve;
         }));
 
