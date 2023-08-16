@@ -4,7 +4,10 @@
   "description": "A React hook for CSS view transitions",
   "scripts": {
     "build:examples": "vite build examples",
-    "build:packages": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=external ./src/*",
+    "build:packages": "npm run build:packages:cjs && npm run build:packages:esm && npm run build:types",
+    "build:packages:cjs": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=external ./src/*",
+    "build:packages:esm": "esbuild --external:react --external:react-dom --format=esm --bundle --outdir=dist/esm --loader:.ts=tsx --sourcemap=external ./src/*",
+    "build:types": "tsc --emitDeclarationOnly",
     "build": "npm run build:packages && jsdoc -R README.md src/",
     "build:watch": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=inline --watch ./src/*",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -20,11 +23,13 @@
   "exports": {
     "./react": {
       "require": "./dist/cjs/react-vt.js",
-      "import": "./src/react-vt.ts"
+      "import": "./dist/esm/react-vt.js",
+      "types": "./dist/react-vt.d.ts"
     },
     "./next": {
       "require": "./dist/cjs/next-vt.js",
-      "import": "./src/next-vt.ts"
+      "import": "./dist/esm/next-vt.js",
+      "types": "./dist/next-vt.d.ts"
     }
   },
   "devDependencies": {
@@ -45,9 +50,9 @@
   "files": [
     "dist/cjs/next-vt.js",
     "dist/cjs/react-vt.js",
-    "src/next-vt.ts",
-    "src/react-vt.ts",
-    "src/react-vt.d.ts",
-    "src/next-vt.d.ts"
+    "dist/esm/next-vt.js",
+    "dist/esm/react-vt.js",
+    "dist/next-vt.d.ts",
+    "dist/react-vt.d.ts"
   ]
 }
