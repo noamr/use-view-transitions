@@ -1,13 +1,13 @@
 {
   "name": "use-view-transitions",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "A React hook for CSS view transitions",
   "scripts": {
     "build:examples": "vite build examples",
-    "build:packages": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.js=jsx --sourcemap=external ./src/*",
+    "build:packages": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=external ./src/*",
     "build": "npm run build:packages && jsdoc -R README.md src/",
-    "build:watch": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.js=jsx --sourcemap=inline --watch ./src/*",
-    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "build:watch": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=inline --watch ./src/*",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite build --watch examples & vite preview examples"
   },
   "author": "Noam Rosenthal <nrosenthal@chromium.org>",
@@ -20,11 +20,11 @@
   "exports": {
     "./react": {
       "require": "./dist/cjs/react-vt.js",
-      "import": "./src/react-vt.js"
+      "import": "./src/react-vt.ts"
     },
     "./next": {
       "require": "./dist/cjs/next-vt.js",
-      "import": "./src/next-vt.js"
+      "import": "./src/next-vt.ts"
     }
   },
   "devDependencies": {
@@ -36,13 +36,17 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jsdoc": "^4.0.2",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "@types/node": "^20.5.0",
+    "typescript": "^5.1.6",
+    "react-refresh": "0.14.0",
+    "eslint-plugin-react-refresh": "0.4.3"
   },
   "files": [
     "dist/cjs/next-vt.js",
     "dist/cjs/react-vt.js",
-    "src/next-vt.js",
-    "src/react-vt.js",
+    "src/next-vt.ts",
+    "src/react-vt.ts",
     "src/react-vt.d.ts",
     "src/next-vt.d.ts"
   ]
