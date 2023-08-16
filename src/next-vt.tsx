@@ -2,10 +2,9 @@ import {
     useViewTransition,
     SuspendViewTransition
 } from "./react-vt";
-import {
+import React, {
     useEffect,
     Suspense,
-    ReactElement,
     FC
 } from "react";
 

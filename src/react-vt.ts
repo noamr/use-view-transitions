@@ -5,6 +5,7 @@ import {
     startTransition as reactStartTransition,
     useEffect,
     useTransition,
+    TransitionFunction,
 } from "react";
 
 let suspendersCount = 0;
@@ -54,6 +55,7 @@ export function AutoViewTransitionsOnClick({ match = "a[href]" }: AutoViewTransi
 
             event.preventDefault();
             event.stopPropagation();
+            // @ts-ignore
             startViewTransition(() => startTransition(() => target.click()));
         }
 
@@ -84,6 +86,7 @@ interface ViewTransitionController {
 
 export function useViewTransition(): ViewTransitionController {
     const [transitionState, setTransitionState] = useState<TransitionState>("idle");
+    // @ts-ignore
     useSyncExternalStore(observers.add.bind(observers), () => suspendersCount, () => 0);
 
     useEffect(() => {
@@ -95,7 +98,7 @@ export function useViewTransition(): ViewTransitionController {
 
     useBlockRendering(transitionState === "capturing-old");
 
-    function startViewTransition(updateCallback?: () => PromiseLike<void>): PromiseLike<void> | void {
+    function startViewTransition(updateCallback?: TransitionFunction): PromiseLike<void> | void {
         // Fallback to simply running the callback soon.
         if (!areViewTransitionsSupported) {
             if (updateCallback)
@@ -105,7 +108,7 @@ export function useViewTransition(): ViewTransitionController {
 
         suspendViewTransitionCapture();
         setTransitionState("capturing-old");
-        const transition = document.startViewTransition!(() => new Promise(async resolve => {
+        const transition = document.startViewTransition!(() => new Promise<void>(async resolve => {
             setTransitionState("capturing-new");
             resumeViewTransitionCapture();
             if (updateCallback)
@@ -127,6 +130,7 @@ export function useViewTransition(): ViewTransitionController {
 
     return {
         transitionState,
+        // @ts-ignore
         startViewTransition,
         suspendViewTransitionCapture,
         resumeViewTransitionCapture

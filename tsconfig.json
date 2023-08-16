@@ -5,6 +5,7 @@
     "jsx": "react",
     "outDir": "./dist",
     "strict": true,
+    "declaration": true,
     "esModuleInterop": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
