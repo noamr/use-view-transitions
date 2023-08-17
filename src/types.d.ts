@@ -1,5 +1,5 @@
 interface Document {
-	startViewTransition?: (callback: () => any) => {
+	startViewTransition?: (callback: () => never) => {
 		finished: Promise<void>
 		ready: Promise<void>
 		updateCallbackDone: Promise<void>

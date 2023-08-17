@@ -2,7 +2,7 @@ import {
     useViewTransition,
     SuspendViewTransition
 } from "./react-vt";
-import React, {
+import {
     useEffect,
     Suspense,
     FC
@@ -23,9 +23,7 @@ interface UseNextRouterViewTransitionsProps {
  * Use this hook in your _app.js.
  *
  */
-export function useNextRouterViewTransitions({
-                                                 events
-                                             }: UseNextRouterViewTransitionsProps): void {
+export function useNextRouterViewTransitions({ events }: UseNextRouterViewTransitionsProps): void {
     const {
         startViewTransition,
         suspendViewTransitionCapture,
@@ -52,8 +50,6 @@ export function useNextRouterViewTransitions({
 }
 
 function RouterEventsNotifier(): null {
-    // usePathname();
-    // useSearchParams();
     return null;
 }
 
@@ -67,7 +63,7 @@ function RouterEventsNotifier(): null {
  * @type {React.FC<{}>}
  * @returns {React.ReactElement}
  */
-export const EnableNextAppRouterViewTransitions: FC<{}> = () => {
+export const EnableNextAppRouterViewTransitions: FC = () => {
     return (
         <Suspense fallback={<SuspendViewTransition />}>
             <RouterEventsNotifier />
