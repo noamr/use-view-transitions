@@ -1,13 +1,21 @@
 import {
-    useViewTransition
+    useViewTransition,
+    SuspendViewTransition
 } from "./react-vt";
-
 import {
     useEffect,
-    Suspense
+    Suspense,
+    FC
 } from "react";
 
 export { SuspendViewTransition, useViewTransition } from "./react-vt";
+
+interface UseNextRouterViewTransitionsProps {
+    events: {
+        on: (event: string, handler: () => void) => void;
+        off: (event: string, handler: () => void) => void;
+    };
+}
 
 /**
  * Performs CSS view transitions automatically when a NextJS navigation takes place.
@@ -15,9 +23,7 @@ export { SuspendViewTransition, useViewTransition } from "./react-vt";
  * Use this hook in your _app.js.
  *
  */
-export function useNextRouterViewTransitions({
-    events
-}) {
+export function useNextRouterViewTransitions({ events }: UseNextRouterViewTransitionsProps): void {
     const {
         startViewTransition,
         suspendViewTransitionCapture,
@@ -25,32 +31,30 @@ export function useNextRouterViewTransitions({
     } = useViewTransition();
 
     useEffect(() => {
-        function beginNavigation() {
+        function beginNavigation(): void {
             startViewTransition();
             suspendViewTransitionCapture();
         };
 
-        function endNavigation() {
+        function endNavigation(): void {
             resumeViewTransitionCapture();
         }
 
         events.on("routeChangeStart", beginNavigation);
         events.on("routeChangeComplete", endNavigation);
         return () => {
-            events.off("routerChangeStart", beginNavigation);
+            events.off("routeChangeStart", beginNavigation);
             events.off("routeChangeComplete", endNavigation);
         };
     }, []);
 }
 
-function RouterEventsNotifier() {
-  usePathname();
-  useSearchParams();
-  return null;
+function RouterEventsNotifier(): null {
+    return null;
 }
 
 /**
- * A React component that that makes sure view-transitions
+ * A React component that makes sure view-transitions
  * behave nicely with NextJS app router.
  *
  * Specifically, it suspends capturing the new state until the
@@ -59,8 +63,10 @@ function RouterEventsNotifier() {
  * @type {React.FC<{}>}
  * @returns {React.ReactElement}
  */
-export function EnableNextAppRouterViewTransitions({}) {
-  return <Suspense fallback={<SuspendViewTransition/>}>
-    <RouterEventsNotifier />
-  </Suspense>
+export const EnableNextAppRouterViewTransitions: FC = () => {
+    return (
+        <Suspense fallback={<SuspendViewTransition />}>
+            <RouterEventsNotifier />
+        </Suspense>
+    );
 }
