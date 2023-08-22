@@ -5,8 +5,9 @@ import {
 import {
     useEffect,
     Suspense,
-    FC
+    FC,
 } from "react";
+import React from "react";
 
 export { SuspendViewTransition, useViewTransition } from "./react-vt";
 

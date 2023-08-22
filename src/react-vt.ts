@@ -11,7 +11,7 @@ import {
 let suspendersCount = 0;
 const observers = new Set<() => void>();
 
-let didCaptureNewState: (value?: PromiseLike<void> | void) => void = null;
+let didCaptureNewState: ((value?: PromiseLike<void> | void) => void ) | null = null;
 
 function suspendViewTransitionCapture(): void {
     suspendersCount++;
@@ -56,7 +56,7 @@ export function AutoViewTransitionsOnClick({ match = "a[href]" }: AutoViewTransi
 
             event.preventDefault();
             event.stopPropagation();
-            startViewTransition(() => startTransition(() => target.click()));
+            startViewTransition(() => startTransition(() => (target as HTMLElement).click()));
         }
 
         globalThis.document.addEventListener("click", captureClick, { capture: true });
@@ -86,7 +86,12 @@ interface ViewTransitionController {
 
 export function useViewTransition(): { resumeViewTransitionCapture: () => void; transitionState: "idle" | "capturing-old" | "capturing-new" | "animating" | "skipped"; startViewTransition: (updateCallback?: React.TransitionFunction) => (PromiseLike<void> | void); suspendViewTransitionCapture: () => void } {
     const [transitionState, setTransitionState] = useState<TransitionState>("idle");
-    useSyncExternalStore(observers.add.bind(observers), () => suspendersCount, () => 0);
+    useSyncExternalStore((onStoreChange) => {
+        observers.add(onStoreChange);
+        return () => {
+            observers.delete(onStoreChange);
+        }
+    }, () => suspendersCount, () => 0);
 
     useEffect(() => {
         if (didCaptureNewState && !suspendersCount) {

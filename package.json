@@ -5,8 +5,8 @@
   "scripts": {
     "build:examples": "vite build examples",
     "build:packages": "npm run build:packages:cjs && npm run build:packages:esm && npm run build:types",
-    "build:packages:cjs": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=external ./src/*",
-    "build:packages:esm": "esbuild --external:react --external:react-dom --format=esm --bundle --outdir=dist/esm --loader:.ts=tsx --sourcemap=external ./src/*",
+    "build:packages:cjs": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --sourcemap=external ./src/*",
+    "build:packages:esm": "esbuild --external:react --external:react-dom --format=esm --bundle --outdir=dist/esm --sourcemap=external ./src/*",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "npm run build:packages && jsdoc -R README.md src/",
     "build:watch": "esbuild --external:react --external:react-dom --format=cjs --bundle --outdir=dist/cjs --loader:.ts=tsx --sourcemap=inline --watch ./src/*",
